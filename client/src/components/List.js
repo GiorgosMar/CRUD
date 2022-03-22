@@ -12,44 +12,65 @@ import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
-
-// import components
-import Delete from "./Delete";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 function List() {
-
+    //navigate//
     const navigate = useNavigate();
 
-    //useState
-    const [entries, setEntries] = useState([]);
+    //useState//
+    const [employees, setEmployees] = useState([]);
 
-    //get entries
-    const getEntries = async () => {
+    //Delete//
+    const deleteEmployee = async (id) => {
+        try{
+            // eslint-disable-next-line no-unused-vars
+            const deleteEmpl = await fetch(`http://localhost:5000/employee/${id}`, {
+                method: "DELETE"
+            }); 
+            getEmployees();
+        } catch(err){
+            console.error(err.message)
+        }
+    }
+    
+
+    //get employees//
+    const getEmployees = async () => {
         try {
             const response = await fetch("http://localhost:5000/employee");
             const jsonData = await response.json();
-            
-            setEntries(jsonData);
+
+            setEmployees(jsonData);
         } catch (err) {
             console.log(err.message);
         }
     };
 
-    //useEffect
+    //useEffect//
     useEffect(() => {
-        getEntries();
+        getEmployees();
     }, []);
 
 
-    //format date 
+    //format date //
     const getFormattedDate = (dateStr) => {
         const date = new Date(dateStr);
-        return date.toLocaleDateString();
+        return date.toLocaleDateString('gr');
     }
-   
+    
     return <Fragment>
         <h1 align='center'>ΛΙΣΤΑ ΑΤΟΜΩΝ</h1>
-        <Typography align="right" ><Button variant="outlined" color="success" size='large' onClick={() => navigate('/insert')} startIcon={<AddReactionOutlinedIcon />} endIcon={<DoubleArrowIcon/>}>ΠΡΟΣΘΗΚΗ ΑΤΟΜΟΥ</Button></Typography> 
+        <Typography align="right" >
+            <Button 
+            variant="outlined" 
+            color="success"
+            size='large' 
+            onClick={() => navigate('/insert')} 
+            startIcon={<AddReactionOutlinedIcon />} 
+            endIcon={<DoubleArrowIcon/>}>ΠΡΟΣΘΗΚΗ ΑΤΟΜΟΥ
+            </Button>
+        </Typography> 
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650}} aria-label="simple table">
                 <TableHead>
@@ -63,19 +84,32 @@ function List() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {entries.map((entrie) => (
+                    {employees.map((employee) => (
                         <TableRow
-                            key={entrie.id}
+                            key={employee.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {entrie.firstname}
+                                {employee.firstname}
                             </TableCell>
-                            <TableCell align="center">{entrie.lastname}</TableCell>
-                            <TableCell align="center">{getFormattedDate(entrie.dateofbirth)}</TableCell>
-                            <TableCell align="center">{entrie.afm}</TableCell>
-                            <TableCell align="center"><Button variant="outlined" color="warning" onClick={() => navigate(`/${entrie.id}/update`)} endIcon={<EditIcon/>}>Ενημέρωση</Button></TableCell>
-                            <TableCell align="center" ><Delete entrie= {entrie} /></TableCell>
+                            <TableCell align="center">{employee.lastname}</TableCell>
+                            <TableCell align="center">{getFormattedDate(employee.dateofbirth)}</TableCell>
+                            <TableCell align="center">{employee.afm}</TableCell>
+                            <TableCell align="center">
+                                <Button
+                                 variant="outlined" 
+                                 color="warning" 
+                                 onClick={() => navigate(`/${employee.id}/update`)} 
+                                 endIcon={<EditIcon/>}>Ενημέρωση</Button>
+                                 </TableCell>
+                            <TableCell 
+                            align="center" >
+                                <Button 
+                                variant="outlined" 
+                                color="error" 
+                                onClick={() => deleteEmployee(employee.id)} 
+                                endIcon={<HighlightOffIcon/>}>ΔΙΑΓΡΑΦΗ</Button>
+                                </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

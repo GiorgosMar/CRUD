@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 import React, {Fragment, useState, useEffect} from "react";
 import TextField from '@material-ui/core/TextField';
@@ -11,12 +13,14 @@ import Alert from '@mui/material/Alert';
 import { Container } from "@mui/material";
 import { useNavigate, useParams  } from "react-router-dom";
 
-
 const Edit = () =>{
-
+  //navigate//
   const navigate =  useNavigate();
+  
+  //useParams//
   const params = useParams();
-  //useStates
+  
+  //useStates//
   const [userUpdate, setUserUpdate] = useState({
     fName: '',
     lName: '',
@@ -25,33 +29,46 @@ const Edit = () =>{
   })
   const [errorMessage, setErrorMessage] = useState(false);
 
-  const onSubmitFormUpadate = async e => {
+  //Update Employee//
+  const onSubmitFormUpadate = async e => { 
     e.preventDefault();
     try{
+      const response = await fetch(`http://localhost:5000/employee/?afm=${userUpdate.afm}`);
+      const returnEmployee = await response.json();
+
+      if(returnEmployee.afm != userUpdate.afm || returnEmployee.id == params.id){
       const body= userUpdate;
-      const response = await fetch(`http://localhost:5000/employee/${params.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+      const response = await fetch(
+        `http://localhost:5000/employee/${params.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userUpdate)
         });
-        console.log(body);
-        navigate('/');
+      console.log(body);
+      navigate('/');  
+      }else{
+        setErrorMessage("Το Α.Φ.Μ. υπάρχει ήδη!");
+      }
     }catch (err) {
       setErrorMessage('Κάτι πήγε στραβά');
       }
   };
   
+  //Load Employee//
   const loadEmp = async (id) => {
     const res = await fetch(`http://localhost:5000/employee/${params.id}`);
     const data = await res.json();
     setUserUpdate({ fName: data.firstname, lName: data.lastname, dateOfBirth: data.dateofbirth, afm: data.afm });
   };
 
+  //useEffect//
   useEffect(() => {
     if (params.id) {
       loadEmp(params.id);
     }
   }, [params.id]);
+
   
   return <Fragment>
         <Dialog open>
