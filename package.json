@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.3"
+  },
+  "dependencies": {
+    "react-router": "^6.2.2"
+  }
+}
