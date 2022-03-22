@@ -5,5 +5,5 @@ CREATE TABLE employee(
     firstName VARCHAR(20),
     lastName VARCHAR(20),
     dateOfBirth DATE,
-    afm VARCHAR(9)
+    afm VARCHAR(9) UNIQUE
 );

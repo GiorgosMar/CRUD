@@ -29,10 +29,23 @@ app.post("/employee", async (req, res) =>{
 //GET ALL
 app.get("/employee", async (req, res) =>{
     try{
+        const {afm}= req.query;
+        if(afm === undefined){
         const allEntries = await pool.query(
             "SELECT * FROM employee"
         );
-        res.json(allEntries.rows);
+        res.json(allEntries.rows);}
+        else{
+            const check = await pool.query(
+                "SELECT * FROM employee WHERE afm=$1",
+                [afm]
+            );
+            if(check.rows[0] == undefined){
+                res.json("EMPTY");
+            }else{
+            res.json(check.rows[0]);
+            }
+        }
     }catch (err){
         console.log(err.message);
     }
@@ -42,15 +55,17 @@ app.get("/employee", async (req, res) =>{
 app.get("/employee/:id", async (req, res) =>{
     try{
         const {id} = req.params;
-        const oneEntrie = await pool.query(
+        const oneEntry = await pool.query(
             "SELECT * FROM employee WHERE id=$1",
             [id]
         );
-        res.json(oneEntrie.rows[0]);
+        res.json(oneEntry.rows[0]);
     }catch (err){
         console.log(err.message);
     }
 });
+
+
 
 //UPDATE
 app.put("/employee/:id", async (req, res) =>{
@@ -65,7 +80,7 @@ app.put("/employee/:id", async (req, res) =>{
             "UPDATE employee SET firstName=$1, lastName=$2, dateOfBirth=$3, afm=$4 WHERE id = $5",
             [fName, lName, dateOfBirth, afm, id]
         );
-        res.json("UPDATED!");
+        res.json(updateElement.rows[0]);
     }catch (err){
         console.log(err.message);
     }
@@ -80,7 +95,7 @@ app.delete("/employee/:id", async (req, res) =>{
             "DELETE FROM employee WHERE id=$1",
             [id]
         );
-        res.json("DELETED!");
+        res.json(deleteElement.rows[0]);
     }catch (err){
         console.log(err.message);
     }
