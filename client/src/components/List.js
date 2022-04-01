@@ -155,28 +155,18 @@ function List() {
         if(countPages == ((currentPage - 1) + 0.2)){
             const endIndex = startIndex;
             setIndexies({startIndex: startIndex, endIndex: endIndex});
-            //console.log(currentPage);
-            //console.log(countPages);
         }else if(countPages == ((currentPage - 1) + 0.4)){
             const endIndex = startIndex + 1;
             setIndexies({startIndex: startIndex, endIndex: endIndex});
-            //console.log(currentPage);
-            //console.log(countPages);
         }else if(countPages == ((currentPage - 1) + 0.6)){
             const endIndex = startIndex + 2;
             setIndexies({startIndex: startIndex, endIndex: endIndex});
-            //console.log(currentPage);
-            //console.log(countPages);
         }else if(countPages == ((currentPage -1 ) + 0.8)){
             const endIndex = startIndex + 3;
             setIndexies({startIndex: startIndex, endIndex: endIndex});
-            //console.log(currentPage);
-            //console.log(countPages);
         }else{
             const endIndex = startIndex + 4;
             setIndexies({startIndex: startIndex, endIndex: endIndex});
-            //console.log(currentPage);
-            //console.log(countPages);
         }  
         
     }
