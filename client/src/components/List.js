@@ -29,17 +29,19 @@ function List() {
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [countPages, setCountPages] = useState();
+    const [indexies, setIndexies] = useState({startIndex: null, endIndex: null});
     const [disableNextButton, setDisableNextButton] = useState(false);
     const [disablePrevButton, setDisablePrevButton] = useState(false);
+
 
 
     //handler next page//
     const handlerNextPage = () => {
         if(currentPage < countPages){
-        setCurrentPage(prevCurrentPage => prevCurrentPage + 1);
+            setCurrentPage(prevCurrentPage => prevCurrentPage + 1);
         }
     };
-
+    
     //handler next button//
     const handlerNextButton = () => {
         if(currentPage >= countPages){
@@ -52,7 +54,10 @@ function List() {
     //handler prev page//
     const handlerPrevPage = () => {
         if(currentPage>1){
-        setCurrentPage(prevCurrentPage => prevCurrentPage - 1);
+            setCurrentPage(prevCurrentPage => prevCurrentPage - 1);
+            const startIndex = ((currentPage - 1) * 5) + 1;
+            const endIndex = currentPage * 5; 
+            setIndexies([startIndex, endIndex]);
         }
     };
 
@@ -134,6 +139,7 @@ function List() {
         getEmployees(currentPage);
         handlerNextButton();
         handlerPrevButton();
+        changeIndexies();
     }, [employees]);
 
 
@@ -142,7 +148,39 @@ function List() {
         const date = new Date(dateStr);
         return date.toLocaleDateString('gr');
     }
-    
+
+    //Fix Indexies//
+    const changeIndexies = () => {
+        const startIndex = ((currentPage - 1) * 5) + 1;
+        if(countPages == ((currentPage - 1) + 0.2)){
+            const endIndex = startIndex;
+            setIndexies({startIndex: startIndex, endIndex: endIndex});
+            //console.log(currentPage);
+            //console.log(countPages);
+        }else if(countPages == ((currentPage - 1) + 0.4)){
+            const endIndex = startIndex + 1;
+            setIndexies({startIndex: startIndex, endIndex: endIndex});
+            //console.log(currentPage);
+            //console.log(countPages);
+        }else if(countPages == ((currentPage - 1) + 0.6)){
+            const endIndex = startIndex + 2;
+            setIndexies({startIndex: startIndex, endIndex: endIndex});
+            //console.log(currentPage);
+            //console.log(countPages);
+        }else if(countPages == ((currentPage -1 ) + 0.8)){
+            const endIndex = startIndex + 3;
+            setIndexies({startIndex: startIndex, endIndex: endIndex});
+            //console.log(currentPage);
+            //console.log(countPages);
+        }else{
+            const endIndex = startIndex + 4;
+            setIndexies({startIndex: startIndex, endIndex: endIndex});
+            //console.log(currentPage);
+            //console.log(countPages);
+        }  
+        
+    }
+
     return <Fragment>
         <h1 align   ='center'>ΛΙΣΤΑ</h1>
         <Typography align="right" >
@@ -199,7 +237,8 @@ function List() {
                 </TableBody>
             </Table>
             <Typography align="right">
-                <span>Σελίδα {currentPage}η</span>
+                <span style={{ marginRight: '10%'}}>Σελίδα {currentPage}η <br/></span>
+                <span style={{ marginRight: '1.5%'}}>{indexies.startIndex} -  {indexies.endIndex}</span>
                 <Button
                 disabled={disablePrevButton}
                 variant="raised"

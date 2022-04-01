@@ -120,7 +120,7 @@ const Input = () =>{
         </Container>
         <DialogActions>
           <Button color="error" onClick={() => navigate('/')}>ΠΙΣΩ</Button>
-          <Button color="error" onClick={onSubmitForm}>ΕΓΓΡΑΦΗ</Button>
+          <Button color="success" onClick={onSubmitForm}>ΕΓΓΡΑΦΗ</Button>
         </DialogActions>
       </Dialog>
     </Fragment>
