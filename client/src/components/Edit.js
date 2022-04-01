@@ -22,10 +22,10 @@ const Edit = () =>{
   
   //useStates//
   const [userUpdate, setUserUpdate] = useState({
-    fName: '',
-    lName: '',
-    dateOfBirth: '',
-    afm: ''
+    fName: null,
+    lName: null,
+    dateOfBirth: null,
+    afm: null
   })
   const [errorMessage, setErrorMessage] = useState(false);
 

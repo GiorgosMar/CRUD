@@ -1,3 +1,6 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, {Fragment, useEffect, useState} from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,6 +16,10 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 function List() {
     //navigate//
@@ -20,28 +27,96 @@ function List() {
 
     //useState//
     const [employees, setEmployees] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [countPages, setCountPages] = useState();
+    const [disableNextButton, setDisableNextButton] = useState(false);
+    const [disablePrevButton, setDisablePrevButton] = useState(false);
+
+
+    //handler next page//
+    const handlerNextPage = () => {
+        if(currentPage < countPages){
+        setCurrentPage(prevCurrentPage => prevCurrentPage + 1);
+        }
+    };
+
+    //handler next button//
+    const handlerNextButton = () => {
+        if(currentPage >= countPages){
+            setDisableNextButton(true);
+        }else{
+            setDisableNextButton(false);
+        }
+    };
+
+    //handler prev page//
+    const handlerPrevPage = () => {
+        if(currentPage>1){
+        setCurrentPage(prevCurrentPage => prevCurrentPage - 1);
+        }
+    };
+
+    //handler prev button//
+    const handlerPrevButton = () => {
+        if(currentPage == 1){
+            setDisablePrevButton(true);
+        }else{
+            setDisablePrevButton(false);
+        }
+    };
+    
+    //Delete confirmation alert//
+    const popupAlert = (id) => {
+        confirmAlert({
+          title: 'Διαγραφή χρήστη',
+          message: 'Είστε σίγουρος/η για την διαγραφή;',
+          buttons: [
+            {
+              label: 'Ακύρωση',
+              onClick: navigate('/')
+            },
+            {
+                label: 'Ναι',
+                onClick: () => deleteEmployee(id)
+            }
+          ]
+        });
+      };
 
     //Delete//
     const deleteEmployee = async (id) => {
         try{
-            // eslint-disable-next-line no-unused-vars
             const deleteEmpl = await fetch(`http://localhost:5000/employee/${id}`, {
                 method: "DELETE"
             }); 
-            getEmployees();
+            getEmployees(currentPage);
+            navigate('/');
         } catch(err){
             console.error(err.message)
         }
     }
     
-
     //get employees//
-    const getEmployees = async () => {
+    const getEmployees = async (currentPage) => {
+        try {
+            const response = await fetch(`http://localhost:5000/employee/?page=${currentPage}`);
+            const getEmpl = await response.json();
+
+            setEmployees(getEmpl);
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    //get count employees//
+    const getCountPages = async () => {
         try {
             const response = await fetch("http://localhost:5000/employee");
-            const jsonData = await response.json();
+            const getCountPgs = await response.json();
 
-            setEmployees(jsonData);
+            setCountPages(getCountPgs);
+
         } catch (err) {
             console.log(err.message);
         }
@@ -49,8 +124,17 @@ function List() {
 
     //useEffect//
     useEffect(() => {
-        getEmployees();
-    }, []);
+        getEmployees(currentPage);
+    }, [currentPage]);
+
+
+    //useEffect//
+    useEffect(() => {
+        getCountPages();
+        getEmployees(currentPage);
+        handlerNextButton();
+        handlerPrevButton();
+    }, [employees]);
 
 
     //format date //
@@ -60,7 +144,7 @@ function List() {
     }
     
     return <Fragment>
-        <h1 align='center'>ΛΙΣΤΑ ΑΤΟΜΩΝ</h1>
+        <h1 align   ='center'>ΛΙΣΤΑ</h1>
         <Typography align="right" >
             <Button 
             variant="outlined" 
@@ -68,7 +152,7 @@ function List() {
             size='large' 
             onClick={() => navigate('/insert')} 
             startIcon={<AddReactionOutlinedIcon />} 
-            endIcon={<DoubleArrowIcon/>}>ΠΡΟΣΘΗΚΗ ΑΤΟΜΟΥ
+            endIcon={<DoubleArrowIcon/>}>ΠΡΟΣΘΗΚΗ
             </Button>
         </Typography> 
         <TableContainer component={Paper}>
@@ -107,13 +191,28 @@ function List() {
                                 <Button 
                                 variant="outlined" 
                                 color="error" 
-                                onClick={() => deleteEmployee(employee.id)} 
+                                onClick={() => popupAlert(employee.id)}
                                 endIcon={<HighlightOffIcon/>}>ΔΙΑΓΡΑΦΗ</Button>
-                                </TableCell>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
+            <Typography align="right">
+                <span>Σελίδα {currentPage}η</span>
+                <Button
+                disabled={disablePrevButton}
+                variant="raised"
+                style={{ backgroundColor: 'transparent'}}
+                onClick={() => handlerPrevPage()}
+                ><NavigateBeforeIcon/></Button>
+                <Button
+                disabled={disableNextButton}
+                variant="raised"
+                style={{ backgroundColor: 'transparent'}}
+                onClick={() => handlerNextPage()}
+                ><NavigateNextIcon/></Button>
+            </Typography>
         </TableContainer>
     </Fragment>;
 }

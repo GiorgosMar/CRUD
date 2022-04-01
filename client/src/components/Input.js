@@ -21,13 +21,13 @@ const Input = () =>{
   
   //useStates//
   const [userInsert, setUserInsert] = useState({
-    fName: '',
-    lName: '',
-    dateOfBirth: '',
-    afm: ''
+    fName: null,
+    lName: null,
+    dateOfBirth: null,
+    afm: null
   })
   const [userCheck, setUserCheck] = useState({
-    afm: ''
+    afm: null
   })
   const [errorMessage, setErrorMessage] = useState(false);
 
@@ -57,7 +57,7 @@ const Input = () =>{
     <Dialog open>
       <DialogTitle>ΕΓΓΡΑΦΗ</DialogTitle>
       <DialogContent>
-        <DialogContentText>ΕΙΣΑΓΕΤΕ ΤΑ  ΣΤΟΙΧΕΙΑ.</DialogContentText>
+        <DialogContentText>ΕΙΣΑΓΕΤΕ ΤΑ ΣΤΟΙΧΕΙΑ.</DialogContentText>
         <TextField
         autoFocus
         margin="dense"
