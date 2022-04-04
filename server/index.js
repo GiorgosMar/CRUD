@@ -3,9 +3,16 @@ const app = express();
 const cors = require("cors"); 
 const pool = require("./db");
 
-//middleware 
+const PORT = process.env.PORT || 5000;
+
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.static(buildPath));
+
+
+/*//middleware 
 app.use(cors());
 app.use(express.json());
+*/
 
 //ROUTES//
 
@@ -102,8 +109,6 @@ app.delete("/employee/:id", async (req, res) =>{
         console.log(err.message);
     }
 });
-
-const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server has started on port ${PORT}`);
