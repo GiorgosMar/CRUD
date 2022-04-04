@@ -1,56 +1,14 @@
 {
-  "name": "client",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.8.2",
-    "@emotion/styled": "^11.8.1",
-    "@jeact/mui-dynamic-theme": "^2.0.0",
-    "@material-ui/core": "^4.12.3",
-    "@mui/icons-material": "^5.5.0",
-    "@mui/lab": "^5.0.0-alpha.72",
-    "@mui/material": "^5.5.0",
-    "@mui/styled-engine-sc": "^5.4.2",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "moment": "^2.29.1",
-    "react": "^17.0.2",
-    "react-date-picker": "^8.4.0",
-    "react-datepicker": "^4.7.0",
-    "react-dom": "^17.0.2",
-    "react-router-dom": "^6.2.2",
-    "react-scripts": "^5.0.0",
-    "styled-components": "^5.3.3",
-    "typography": "^0.16.21",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start-client": "react-scripts start",
-    "build": "react-scripts build && (cd ../server && yarn install)",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start": "react-scripts start && cd ../server nodemon index"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
-    "eslint": "^8.11.0"
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.3"
+  },
+  "dependencies": {
+    "npm-run": "^5.0.1",
+    "react-confirm-alert": "^2.8.0",
+    "react-router": "^6.2.2",
+    "typography": "^0.16.21"
   }
 }
