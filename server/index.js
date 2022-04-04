@@ -9,10 +9,10 @@ const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));
 
 
-/*//middleware 
+//middleware 
 app.use(cors());
 app.use(express.json());
-*/
+
 
 //ROUTES//
 
