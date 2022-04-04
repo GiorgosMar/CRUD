@@ -1,17 +1,14 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.3"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.3",
-    "pg": "^8.7.3"
+    "npm-run": "^5.0.1",
+    "react-confirm-alert": "^2.8.0",
+    "react-router": "^6.2.2",
+    "typography": "^0.16.21"
   }
 }
