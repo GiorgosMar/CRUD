@@ -1,16 +1,11 @@
-const path = require('path');
 const express = require("express");
 const app = express();
-//const cors = require("cors"); 
+const cors = require("cors"); 
 const pool = require("./db");
 
-const buildPath = path.join(__dirname, '..', 'build');
-app.use(express.static(buildPath));
-
-
-/*//middleware 
+//middleware 
 app.use(cors());
-app.use(express.json());*/
+app.use(express.json());
 
 
 //ROUTES//
@@ -109,6 +104,6 @@ app.delete("/employee/:id", async (req, res) =>{
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server has started on port ${PORT}`);
+app.listen(5000, () => {
+    console.log("Server has started on port 5000");
 });
