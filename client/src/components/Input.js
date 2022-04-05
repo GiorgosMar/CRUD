@@ -34,12 +34,12 @@ const Input = () =>{
   const onSubmitForm = async e => {
     e.preventDefault();
     try{
-      const response = await fetch(`http://localhost:5000/employee?afm=${userInsert.afm}`);
+      const response = await fetch(`/employee?afm=${userInsert.afm}`);
       const returnAfm = await response.json();
 
      if(returnAfm.afm !== userInsert.afm){
         const body= userInsert;
-        const response = await fetch("http://localhost:5000/employee", {
+        const response = await fetch("/employee", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)

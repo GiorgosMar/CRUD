@@ -33,13 +33,13 @@ const Edit = () =>{
   const onSubmitFormUpadate = async e => { 
     e.preventDefault();
     try{
-      const response = await fetch(`http://localhost:5000/employee/?afm=${userUpdate.afm}`);
+      const response = await fetch(`/employee/?afm=${userUpdate.afm}`);
       const returnEmployee = await response.json();
 
       if(returnEmployee.afm != userUpdate.afm || returnEmployee.id == params.id){
       const body= userUpdate;
       const response = await fetch(
-        `http://localhost:5000/employee/${params.id}`,
+        `/employee/${params.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -57,7 +57,7 @@ const Edit = () =>{
   
   //Load Employee//
   const loadEmp = async (id) => {
-    const res = await fetch(`http://localhost:5000/employee/${params.id}`);
+    const res = await fetch(`/employee/${params.id}`);
     const data = await res.json();
     setUserUpdate({ fName: data.firstname, lName: data.lastname, dateOfBirth: data.dateofbirth, afm: data.afm });
   };

@@ -94,7 +94,7 @@ function List() {
     //Delete//
     const deleteEmployee = async (id) => {
         try{
-            const deleteEmpl = await fetch(`http://localhost:5000/employee/${id}`, {
+            const deleteEmpl = await fetch(`/employee/${id}`, {
                 method: "DELETE"
             }); 
             getEmployees(currentPage);
@@ -107,7 +107,7 @@ function List() {
     //get employees//
     const getEmployees = async (currentPage) => {
         try {
-            const response = await fetch(`http://localhost:5000/employee/?page=${currentPage}`);
+            const response = await fetch(`/employee/?page=${currentPage}`);
             const getEmpl = await response.json();
 
             setEmployees(getEmpl);
@@ -120,7 +120,7 @@ function List() {
     //get count employees//
     const getCountPages = async () => {
         try {
-            const response = await fetch("http://localhost:5000/employee");
+            const response = await fetch("/employee");
             const getCountPgs = await response.json();
 
             setCountPages(getCountPgs);
