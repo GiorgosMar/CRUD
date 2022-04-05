@@ -1,18 +1,4 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "engines": {
-    "npm": "16.13.2",
-    "node": "8.1.2"
-  },
-  "scripts": {
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no=shrinkwrap && npm rum build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd server && node index.js",
-    "dev": "nodemon server.js"
-  },
   "dependencies": {
     "@date-io/date-fns": "^2.13.1",
     "react-confirm-alert": "^2.8.0",
