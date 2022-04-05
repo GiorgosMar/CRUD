@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
-    
+    "start": "node index.js",
+    "dev": "nodemon server.js",
+    "build": "webpack --mode production",
+    "heroku-postbuild": "npm install && npm run build" 
   },
   "engines": {
     "npm": "16.13.2",
