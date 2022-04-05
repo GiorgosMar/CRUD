@@ -8,9 +8,9 @@
     "node": "8.1.2"
   },
   "scripts": {
-    "heroku-postbuild": "cd ../client && npm install && npm install --only=dev --no=shrinkwrap && npm rum build",
+    "heroku-postbuild": "cd ../client && npm install && npm install && npm rum build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "node index.js && cd ../client && npm start)",
     "dev": "nodemon server.js",
     "build": "webpack --mode production"
   },
