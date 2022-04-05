@@ -20,6 +20,9 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import {AppBar,Box, Container} from '@mui/material';
+import Toolbar from "@mui/material/Toolbar";
 
 function List() {
     //navigate//
@@ -172,7 +175,7 @@ function List() {
     }
 
     return <Fragment>
-        <h1 align   ='center'>ΛΙΣΤΑ</h1>
+        <h1 align="center">ΛΙΣΤΑ</h1>
         <Typography align="right" >
             <Button 
             variant="outlined" 
