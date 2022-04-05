@@ -7,9 +7,8 @@
   "engines": { "node": "16.13.2", "npm": "8.1.2" },
   
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "npm run build"
-  },
+    "test": "echo \"Error: no test specified\" && exit 1"
+   },
   "author": "",
   "license": "ISC",
   "dependencies": {
