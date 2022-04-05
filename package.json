@@ -1,14 +1,7 @@
 {
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.14.0",
-    "@typescript-eslint/parser": "^5.14.0",
-    "eslint": "^8.11.0",
-    "eslint-plugin-react": "^7.29.3"
-  },
   "dependencies": {
-    "npm-run": "^5.0.1",
+    "@date-io/date-fns": "^2.13.1",
     "react-confirm-alert": "^2.8.0",
-    "react-router": "^6.2.2",
-    "typography": "^0.16.21"
+    "react-router-dom": "^6.2.2"
   }
 }
