@@ -37,7 +37,7 @@ const Input = () =>{
       const response = await fetch(`/employee?afm=${userInsert.afm}`);
       const returnAfm = await response.json();
 
-     if(returnAfm.afm !== userInsert.afm){
+     if(returnAfm.afm !== userInsert.afm && userInsert.afm !== null && userInsert.afm.length == 9){
         const body= userInsert;
         const response = await fetch("/employee", {
         method: "POST",
@@ -45,9 +45,13 @@ const Input = () =>{
         body: JSON.stringify(body)
       });
       navigate('/');
+      }else if(userInsert.afm === null){
+        setErrorMessage("Το πεδίο Α.Φ.Μ. δεν μπορεί να είναι κενό!");
+      }else if(userInsert.afm.length < 9 || userInsert.afm.length > 9 ){
+        setErrorMessage("Το πεδίο Α.Φ.Μ. πρέπει να έχει 9 ψηφία!");
       }else{
         setErrorMessage("Το Α.Φ.Μ. υπάρχει ήδη!");
-    }
+      }
     }catch (err) {
       setErrorMessage(err.message);
     }

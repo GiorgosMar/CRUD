@@ -32,7 +32,7 @@ function List() {
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [countPages, setCountPages] = useState();
-    const [indexies, setIndexies] = useState({startIndex: null, endIndex: null});
+    const [indexies, setIndexies] = useState({startIndex: 0, endIndex: 0});
     const [disableNextButton, setDisableNextButton] = useState(false);
     const [disablePrevButton, setDisablePrevButton] = useState(false);
 

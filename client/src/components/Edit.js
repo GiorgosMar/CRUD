@@ -36,7 +36,7 @@ const Edit = () =>{
       const response = await fetch(`/employee/?afm=${userUpdate.afm}`);
       const returnEmployee = await response.json();
 
-      if(returnEmployee.afm != userUpdate.afm || returnEmployee.id == params.id){
+      if(returnEmployee.afm != userUpdate.afm && userUpdate.length == 9 || returnEmployee.id == params.id){
       const body= userUpdate;
       const response = await fetch(
         `/employee/${params.id}`,
@@ -47,6 +47,10 @@ const Edit = () =>{
         });
       console.log(body);
       navigate('/');  
+      }else if(userUpdate.afm.length === 0){
+        setErrorMessage("Το πεδίο Α.Φ.Μ. δεν μπορεί να είναι κενό!");
+      }else if(userUpdate.afm.length < 9 || userUpdate.afm.length > 9 ){
+        setErrorMessage("Το πεδίο Α.Φ.Μ. πρέπει να έχει 9 ψηφία!");
       }else{
         setErrorMessage("Το Α.Φ.Μ. υπάρχει ήδη!");
       }
