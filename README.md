@@ -12,7 +12,7 @@ This project consists in a Web Frontend Application and a Web Backend Applicatio
 First, clone the repo:
 
 ```
-git clone https://github.com/
+git clone https://github.com/GiorgosMar/CRUD
 ```
 
 To install the dependencies
@@ -29,5 +29,5 @@ To run the Frontend
 ```
 npm start
 ```
-## Authors
+# Authors
 -@GiorgosMar
