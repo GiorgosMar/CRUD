@@ -11,8 +11,8 @@ This project consists in a Web Frontend Application and a Web Backend Applicatio
 
 First, clone the repo:
 
-Rishi Gupta: bar
+...
 
-test here > recipient block 2 Today
+ffffffffff
 
-Rishi Gupta: baz
+...
