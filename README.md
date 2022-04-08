@@ -12,7 +12,22 @@ This project consists in a Web Frontend Application and a Web Backend Applicatio
 First, clone the repo:
 
 ```
-
-ffffffffff
-
+git clone https://github.com/
 ```
+
+To install the dependencies
+```
+npm install
+```
+
+To run the Backend
+```
+nodemon index
+```
+
+To run the Frontend
+```
+npm start
+```
+## Authors
+-@GiorgosMar
