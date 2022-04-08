@@ -30,4 +30,4 @@ To run the Frontend
 npm start
 ```
 # Authors
--@GiorgosMar
+- GiorgosMar
