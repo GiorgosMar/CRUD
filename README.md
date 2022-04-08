@@ -29,5 +29,6 @@ To run the Frontend
 ```
 npm start
 ```
-# Authors
--@ GiorgosMar
+## Authors
+- [@GiorgosMar](https://github.com/GiorgosMar)
+
