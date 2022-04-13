@@ -63,7 +63,11 @@ const Edit = () =>{
   const loadEmp = async (id) => {
     const res = await fetch(`/employee/${params.id}`);
     const data = await res.json();
-    setUserUpdate({ fName: data.firstname, lName: data.lastname, dateOfBirth: data.dateofbirth, afm: data.afm });
+    setUserUpdate({ 
+      fName: data.firstname, 
+      lName: data.lastname,
+      dateOfBirth: getFormattedDate(data.dateofbirth),
+      afm: data.afm });
   };
 
   //useEffect//
@@ -72,7 +76,12 @@ const Edit = () =>{
       loadEmp(params.id);
     }
   }, [params.id]);
-
+  
+   //Format Date//
+  const getFormattedDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-CA');
+  }
   
   return <Fragment>
         <Dialog open>
@@ -115,7 +124,7 @@ const Edit = () =>{
             type="date"
             fullWidth
             variant="standard"
-            value={userUpdate.dateOfBirth}
+            value={getFormattedDate(userUpdate.dateOfBirth)}
             InputLabelProps={{
               shrink: true,
             }}
