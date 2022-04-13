@@ -31,7 +31,7 @@ function List() {
     //useState//
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [countPages, setCountPages] = useState();
+    const [countPages, setCountPages] = useState(1);
     const [indexies, setIndexies] = useState({startIndex: 0, endIndex: 0});
     const [disableNextButton, setDisableNextButton] = useState(false);
     const [disablePrevButton, setDisablePrevButton] = useState(false);
@@ -58,9 +58,6 @@ function List() {
     const handlerPrevPage = () => {
         if(currentPage>1){
             setCurrentPage(prevCurrentPage => prevCurrentPage - 1);
-            const startIndex = ((currentPage - 1) * 5) + 1;
-            const endIndex = currentPage * 5; 
-            setIndexies([startIndex, endIndex]);
         }
     };
 
@@ -139,41 +136,17 @@ function List() {
     //useEffect//
     useEffect(() => {
         getCountPages();
-        getEmployees(currentPage);
         handlerNextButton();
         handlerPrevButton();
-        changeIndexies();
     }, [employees]);
 
 
     //format date //
     const getFormattedDate = (dateStr) => {
         const date = new Date(dateStr);
-        return date.toLocaleDateString('gr');
+        return date.toLocaleDateString('en-CA');
     }
-
-    //Fix Indexies//
-    const changeIndexies = () => {
-        const startIndex = ((currentPage - 1) * 5) + 1;
-        if(countPages == ((currentPage - 1) + 0.2)){
-            const endIndex = startIndex;
-            setIndexies({startIndex: startIndex, endIndex: endIndex});
-        }else if(countPages == ((currentPage - 1) + 0.4)){
-            const endIndex = startIndex + 1;
-            setIndexies({startIndex: startIndex, endIndex: endIndex});
-        }else if(countPages == ((currentPage - 1) + 0.6)){
-            const endIndex = startIndex + 2;
-            setIndexies({startIndex: startIndex, endIndex: endIndex});
-        }else if(countPages == ((currentPage -1 ) + 0.8)){
-            const endIndex = startIndex + 3;
-            setIndexies({startIndex: startIndex, endIndex: endIndex});
-        }else{
-            const endIndex = startIndex + 4;
-            setIndexies({startIndex: startIndex, endIndex: endIndex});
-        }  
-        
-    }
-
+    
     return <Fragment>
         <h1 align="center">ΛΙΣΤΑ</h1>
         <Typography align="right" >
@@ -230,8 +203,7 @@ function List() {
                 </TableBody>
             </Table>
             <Typography align="right">
-                <span style={{ marginRight: '10%'}}>Σελίδα {currentPage}η <br/></span>
-                <span style={{ marginRight: '1.5%'}}>{indexies.startIndex} -  {indexies.endIndex}</span>
+                <span>Σελίδα {currentPage}η</span>
                 <Button
                 disabled={disablePrevButton}
                 variant="raised"
