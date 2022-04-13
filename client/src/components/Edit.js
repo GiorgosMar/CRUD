@@ -98,6 +98,9 @@ const Edit = () =>{
             type="text"
             fullWidth
             variant="standard"
+            InputLabelProps={{
+              shrink: true,
+            }}
             value={userUpdate.fName}
             onChange={e => setUserUpdate({
               ...userUpdate,
@@ -111,6 +114,9 @@ const Edit = () =>{
             type="text"
             fullWidth
             variant="standard"
+            InputLabelProps={{
+              shrink: true,
+            }}
             value={ userUpdate.lName }
             onChange={e => setUserUpdate({
               ...userUpdate,
@@ -140,6 +146,9 @@ const Edit = () =>{
             type="text"
             fullWidth
             variant="standard"
+            InputLabelProps={{
+              shrink: true,
+            }}
             value={userUpdate.afm}
             onChange={e => setUserUpdate({
               ...userUpdate,
