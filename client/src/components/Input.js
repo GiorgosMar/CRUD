@@ -8,12 +8,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
-import Typography from '@material-ui/core/Typography';
 import Alert from '@mui/material/Alert';
 import { Container, experimental_sx } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
+import { DatePicker } from "@mui/lab";
+
 
 const Input = () =>{
   //navigate//
@@ -26,9 +26,6 @@ const Input = () =>{
     dateOfBirth: null,
     afm: null
   })
-  const [userCheck, setUserCheck] = useState({
-    afm: null
-  })
   const [errorMessage, setErrorMessage] = useState(false);
 
   const onSubmitForm = async e => {
@@ -37,24 +34,29 @@ const Input = () =>{
       const response = await fetch(`/employee?afm=${userInsert.afm}`);
       const returnAfm = await response.json();
 
-     if(returnAfm.afm !== userInsert.afm && userInsert.afm !== null && userInsert.afm.length == 9){
-        const body= userInsert;
-        const response = await fetch("/employee", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-      navigate('/');
-      }else if(userInsert.afm === null){
-        setErrorMessage("Το πεδίο Α.Φ.Μ. δεν μπορεί να είναι κενό!");
-      }else if(userInsert.afm.length < 9 || userInsert.afm.length > 9 ){
-        setErrorMessage("Το πεδίο Α.Φ.Μ. πρέπει να έχει 9 ψηφία!");
+      if (userInsert.afm === null) {
+        setErrorMessage("To πεδίο ΑΦΜ δεν μπορει να ειναι κενό!");
+      }else if (userInsert.afm.length < 9 || userInsert.afm.length > 9) {
+        setErrorMessage("To πεδίο ΑΦΜ πρέπει να περιέχει 9 ψηφία!");
+      }else if (returnAfm.afm != userInsert.afm) {
+        const body = userInsert;
+        await fetch("/employee", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        navigate("/");
       }else{
         setErrorMessage("Το Α.Φ.Μ. υπάρχει ήδη!");
       }
     }catch (err) {
-      setErrorMessage(err.message);
+      setErrorMessage("Κάτι πήγε στραβά!");
     }
+  };
+
+  const getFormattedDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-CA");
   };
   
   return <Fragment>
@@ -71,6 +73,9 @@ const Input = () =>{
         fullWidth
         variant="standard"
         value={userInsert.fName}
+        InputLabelProps={{
+          shrink: true,
+        }}
         onChange={e => setUserInsert({
           ...userInsert,
           fName: e.target.value
@@ -84,27 +89,26 @@ const Input = () =>{
         fullWidth
         variant="standard"
         value={userInsert.lName}
-        onChange={e => setUserInsert({
-          ...userInsert,
-          lName: e.target.value
-        })}
-        />
-        <TextField
-        margin="dense"
-        id="dateOfBirth"
-        label="ΗΜΕΡΟΜΗΝΙΑ ΓΕΝΝΗΣΗΣ"
-        type="date"
-        fullWidth
-        variant="standard"
-        value={userInsert.dateOfBirth}
         InputLabelProps={{
           shrink: true,
         }}
         onChange={e => setUserInsert({
           ...userInsert,
-          dateOfBirth: e.target.value
+          lName: e.target.value
         })}
         />
+        <DatePicker
+        inputFormat="dd/MM/yyyy"
+        label="ΗΜΕΡΟΜΗΝΙΑ ΓΕΝΝΗΣΗΣ"
+        value={new Date(userInsert.dateOfBirth)}
+        onChange={(date) => {
+          setUserInsert({
+            ...userInsert,
+            dateOfBirth: getFormattedDate(date),
+            });
+          }}
+          renderInput={(params) => <TextField {...params} />}
+          />
         <TextField
         margin="dense"
         id="afm"
@@ -113,6 +117,9 @@ const Input = () =>{
         fullWidth
         variant="standard"
         value={userInsert.afm}
+        InputLabelProps={{
+          shrink: true,
+        }}
         onChange={e => setUserInsert({
           ...userInsert,
           afm: e.target.value

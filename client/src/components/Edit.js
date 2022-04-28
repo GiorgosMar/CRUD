@@ -12,6 +12,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Alert from '@mui/material/Alert';
 import { Container } from "@mui/material";
 import { useNavigate, useParams  } from "react-router-dom";
+import { DatePicker } from "@mui/lab";
+
 
 const Edit = () =>{
   //navigate//
@@ -36,21 +38,17 @@ const Edit = () =>{
       const response = await fetch(`/employee/?afm=${userUpdate.afm}`);
       const returnEmployee = await response.json();
 
-      if(returnEmployee.afm != userUpdate.afm && userUpdate.length == 9 || returnEmployee.id == params.id){
-      const body= userUpdate;
-      const response = await fetch(
-        `/employee/${params.id}`,
-        {
+      if (userUpdate.afm.length === 0) {
+        setErrorMessage("To πεδίο ΑΦΜ δεν μπορει να ειναι κενό!");
+      }else if (userUpdate.afm.length < 9 || userUpdate.afm.length > 9) {
+        setErrorMessage("To πεδίο ΑΦΜ πρέπει να περιέχει 9 ψηφία!");
+      }else if (returnEmployee.afm !== userUpdate.afm || returnEmployee.id == params.id) {
+        await fetch(`/employee/${params.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(userUpdate)
+          body: JSON.stringify(userUpdate),
         });
-      console.log(body);
-      navigate('/');  
-      }else if(userUpdate.afm.length === 0){
-        setErrorMessage("Το πεδίο Α.Φ.Μ. δεν μπορεί να είναι κενό!");
-      }else if(userUpdate.afm.length < 9 || userUpdate.afm.length > 9 ){
-        setErrorMessage("Το πεδίο Α.Φ.Μ. πρέπει να έχει 9 ψηφία!");
+        navigate("/");
       }else{
         setErrorMessage("Το Α.Φ.Μ. υπάρχει ήδη!");
       }
@@ -123,21 +121,17 @@ const Edit = () =>{
               lName: e.target.value
             })}
           />
-          <TextField
-            margin="dense"
-            id="dateOfBirth"
+             <DatePicker
+            inputFormat="dd/MM/yyyy"
             label="ΗΜΕΡΟΜΗΝΙΑ ΓΕΝΝΗΣΗΣ"
-            type="date"
-            fullWidth
-            variant="standard"
-            value={getFormattedDate(userUpdate.dateOfBirth)}
-            InputLabelProps={{
-              shrink: true,
+            value={new Date(userUpdate.dateOfBirth)}
+            onChange={(date) => {
+              setUserUpdate({
+                ...userUpdate,
+                dateOfBirth: getFormattedDate(date),
+              });
             }}
-            onChange={e => setUserUpdate({
-              ...userUpdate,
-              dateOfBirth: e.target.value
-            })}
+            renderInput={(params) => <TextField {...params} />}
           />
           <TextField
             margin="dense"

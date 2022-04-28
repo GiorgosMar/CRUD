@@ -20,9 +20,6 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import {AppBar,Box, Container} from '@mui/material';
-import Toolbar from "@mui/material/Toolbar";
 
 function List() {
     //navigate//
@@ -31,8 +28,7 @@ function List() {
     //useState//
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [countPages, setCountPages] = useState(1);
-    const [indexies, setIndexies] = useState({startIndex: 0, endIndex: 0});
+    const [countPages, setCountPages] = useState();
     const [disableNextButton, setDisableNextButton] = useState(false);
     const [disablePrevButton, setDisablePrevButton] = useState(false);
 
@@ -94,7 +90,7 @@ function List() {
             const deleteEmpl = await fetch(`/employee/${id}`, {
                 method: "DELETE"
             }); 
-            getEmployees(currentPage);
+            getEmployees();
             navigate('/');
         } catch(err){
             console.error(err.message)
@@ -102,40 +98,27 @@ function List() {
     }
     
     //get employees//
-    const getEmployees = async (currentPage) => {
+    const getEmployees = async () => {
         try {
-            const response = await fetch(`/employee/?page=${currentPage}`);
+            const response = await fetch(`/employee?page=${currentPage}`);
             const getEmpl = await response.json();
 
-            setEmployees(getEmpl);
-
+            setEmployees(getEmpl.employees);
+            setCountPages(getEmpl.countPages);
         } catch (err) {
-            console.log(err.message);
-        }
-    };
-
-    //get count employees//
-    const getCountPages = async () => {
-        try {
-            const response = await fetch("/employee");
-            const getCountPgs = await response.json();
-
-            setCountPages(getCountPgs);
-
-        } catch (err) {
-            console.log(err.message);
+            console.error(err.message);
         }
     };
 
     //useEffect//
     useEffect(() => {
-        getEmployees(currentPage);
+        getEmployees();
+        handlerNextButton();
     }, [currentPage]);
 
 
     //useEffect//
     useEffect(() => {
-        getCountPages();
         handlerNextButton();
         handlerPrevButton();
     }, [employees]);
@@ -144,10 +127,11 @@ function List() {
     //format date //
     const getFormattedDate = (dateStr) => {
         const date = new Date(dateStr);
-        return date.toLocaleDateString('en-CA');
+        return date.toLocaleDateString('en-GB');
     }
     
     return <Fragment>
+        <p align="left">https://github.com/GiorgosMar/CRUD</p>
         <h1 align="center">ΛΙΣΤΑ</h1>
         <Typography align="right" >
             <Button 
