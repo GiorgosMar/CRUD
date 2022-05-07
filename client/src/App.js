@@ -13,14 +13,13 @@ import Input from "./components/Input";
 import List from "./components/List";
 import Edit from "./components/Edit";
 import Login from "./components/Login";
-import ProtectedRoutes from "./ProtectedRoutes";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const checkAuthenticated = async () => {
         try {
-          const res = await fetch("http://localhost:5000/authentication/verify", {
+          const res = await fetch("/authentication/verify", {
             method: "POST",
             headers: { jwt_token: localStorage.token }
           });
@@ -47,34 +46,10 @@ function App() {
      <Fragment>
         <Container fixed>
           <Routes>
-          <Route
-              exact
-              path="/login"
-              render={() =>
-                !isAuthenticated ? (
-                  <Login setAuth={setAuth} />
-                ) : (
-                  <Outlet element={<Navigate to="/" />} />
-                )
-              }
-            />
-            <Route
-              exact
-              path="/"
-              render={() =>
-                isAuthenticated ? (
-                  <Outlet element={<List />} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-          {/*<Route path="/login" element={<Login />} />
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/" element={<List />} />
-            <Route path="/insert" element={<Input />} />
-            <Route path="/:id/update" element={<Edit />} />
-           </Route>*/}
+          <Route path="/login" element={!isAuthenticated ? <Login setAuth={setAuth}/> : <Navigate to="/"/>} />
+          <Route path="/" element={isAuthenticated ? <List setAuth={setAuth}/> : <Navigate to="/login"/>} />
+          <Route path="/insert" element={isAuthenticated ? <Input/> : <Navigate to="/login"/> }/>
+          <Route path="/:id/update" element={isAuthenticated ? <Edit/> : <Navigate to="/login"/>} />
           </Routes>
          </Container>
       </Fragment>

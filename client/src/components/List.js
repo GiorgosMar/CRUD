@@ -21,7 +21,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
-function List() {
+function List({setAuth}) {
     //navigate//
     const navigate = useNavigate();
 
@@ -123,6 +123,15 @@ function List() {
         handlerPrevButton();
     }, [employees]);
 
+    const logout = async e => {
+        e.preventDefault();
+        try {
+          localStorage.removeItem("token");
+          setAuth(false);
+        } catch (err) {
+          console.error(err.message);
+        }
+      };
 
     //format date //
     const getFormattedDate = (dateStr) => {
@@ -133,7 +142,18 @@ function List() {
     return <Fragment>
         <p align="left">https://github.com/GiorgosMar/CRUD</p>
         <h1 align="center">ΛΙΣΤΑ</h1>
+        <Typography display="inline">
         <Typography align="right" >
+            <Button 
+            onClick={e => logout(e)}
+            variant="outlined" 
+            color="error"
+            size='large' 
+            >
+                Αποσύνδεση
+            </Button>
+        </Typography>
+        <Typography align="left" >
             <Button 
             variant="outlined" 
             color="success"
@@ -143,6 +163,7 @@ function List() {
             endIcon={<DoubleArrowIcon/>}>ΠΡΟΣΘΗΚΗ
             </Button>
         </Typography> 
+        </Typography>
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650}} aria-label="simple table">
                 <TableHead>
