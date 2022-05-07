@@ -15,7 +15,7 @@ import { useNavigate, useParams  } from "react-router-dom";
 import { DatePicker } from "@mui/lab";
 
 
-const Edit = () =>{
+const Edit = ({ setAuth }) =>{
   //navigate//
   const navigate =  useNavigate();
   
@@ -30,6 +30,16 @@ const Edit = () =>{
     afm: null
   })
   const [errorMessage, setErrorMessage] = useState(false);
+
+  const logout = async e => {
+    e.preventDefault();
+    try {
+      localStorage.removeItem("token");
+      setAuth(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   //Update Employee//
   const onSubmitFormUpadate = async e => { 
@@ -156,6 +166,9 @@ const Edit = () =>{
           <Button color="success" onClick={onSubmitFormUpadate}>Ενημέρωση</Button>
         </DialogActions>
       </Dialog>
+      <button onClick={e => logout(e)} className="btn btn-primary">
+        Logout
+      </button>
     </Fragment>
 }
 
