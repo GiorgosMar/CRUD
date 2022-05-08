@@ -8,12 +8,15 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
 
 const Login = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     email: "",
     password: ""
   });
+
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const { email, password } = inputs;
 
@@ -39,13 +42,20 @@ const Login = ({ setAuth }) => {
         );
   
         const parseRes = await response.json();
-  
-        if (parseRes.jwtToken) {
-          localStorage.setItem("Token", parseRes.jwtToken);
-          setAuth(true);
-        } else {
-          setAuth(false);
-        }
+        console.log(parseRes);
+
+       if(parseRes === "Λάθος στοιχεία!"){
+         setErrorMessage("Λάθος στοιχεία!")
+       }else if(parseRes === "Συμπληρώστε τα πεδία"){
+        setErrorMessage("Συμπληρώστε τα πεδία!")
+      }else if(parseRes === "Λάθος Email"){
+        setErrorMessage("Λάθος Email!")
+      }else if (parseRes.jwtToken) {
+        localStorage.setItem("Token", parseRes.jwtToken);
+        setAuth(true);
+      } else {
+        setAuth(false);
+      }
       } catch (err) {
         console.error(err.message);
       }
@@ -101,10 +111,10 @@ const Login = ({ setAuth }) => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
+            >Sign In
             </Button>
-            <Grid container>
+            <Grid>
+              { errorMessage && <Alert severity="error">{errorMessage}</Alert>} 
             </Grid>
           </Box>
         </Box>

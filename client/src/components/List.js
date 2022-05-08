@@ -20,6 +20,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import Stack from '@mui/material/Stack';
 
 function List({setAuth}) {
     //navigate//
@@ -142,19 +143,10 @@ function List({setAuth}) {
     return <Fragment>
         <p align="left">https://github.com/GiorgosMar/CRUD</p>
         <h1 align="center">ΛΙΣΤΑ</h1>
-        <Typography display="inline">
-        <Typography align="right" >
-            <Button 
-            onClick={e => logout(e)}
-            variant="outlined" 
-            color="error"
-            size='large' 
-            >
-                Αποσύνδεση
-            </Button>
-        </Typography>
-        <Typography align="left" >
-            <Button 
+
+        <Stack spacing={2} direction="column">
+        <Stack spacing={113} display="flex" direction="row">
+            <Button
             variant="outlined" 
             color="success"
             size='large' 
@@ -162,8 +154,14 @@ function List({setAuth}) {
             startIcon={<AddReactionOutlinedIcon />} 
             endIcon={<DoubleArrowIcon/>}>ΠΡΟΣΘΗΚΗ
             </Button>
-        </Typography> 
-        </Typography>
+            <Button 
+            onClick={e => logout(e)}
+            variant="outlined" 
+            color="error"
+            size='large' 
+            >Αποσύνδεση
+            </Button>
+        </Stack>
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650}} aria-label="simple table">
                 <TableHead>
@@ -223,6 +221,7 @@ function List({setAuth}) {
                 ><NavigateNextIcon/></Button>
             </Typography>
         </TableContainer>
+        </Stack>
     </Fragment>;
 }
 
