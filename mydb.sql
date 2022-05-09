@@ -15,5 +15,7 @@ CREATE TABLE users(
     uuid_generate_v4()
     PRIMARY KEY,
     user_email VARCHAR(50),
-    user_password VARCHAR(50)
+    user_password VARCHAR(200)
 );
+
+INSERT INTO users(user_email, user_password) VALUES('user@mail.com', '$2a$10$iOzRv4805tdFMmeMcsmrbO.1gIcYe8Z6VvyR5VVQJmNO55helPE2G');

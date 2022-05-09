@@ -7,11 +7,10 @@ module.exports = function(req, res, next) {
 
     if(req.path === "/login") {
       if(![email, password].every(Boolean)) {
-        return res.json("Missing Credentials");
+        return res.json("Συμπληρώστε τα πεδία!");
       }else if (!validEmail(email)) {
-        return res.json("Invalid Email");
+        return res.json("Λάθος Email!");
       }
     }
-  
     next();
   };

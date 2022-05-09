@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 const pool = require("./db");
 const validInfo = require("./validInfo");
 const jwtGenerator = require("./jwtGenerator");
@@ -13,11 +14,19 @@ router.post("/login", validInfo, async (req, res) => {
         email
       ]);
       if (user.rows.length === 0) {
-        return res.status(401).json("Invalid Credential");
+        return res.status(401).json("Λάθος στοιχεία!");
       }
-      if (password !== user.rows[0].user_password){
-        return res.status(401).json("Invalid Credential");
+
+      const validPassword = await bcrypt.compare(password, user.rows[0].password);
+
+      if (!validPassword) {
+        return res.status(401).json("Λάθος email ή κωδικός!");
       }
+
+      /*if (password !== user.rows[0].user_password){
+        return res.status(401).json("Λάθος στοιχεία!");
+      }*/
+
       const jwtToken = jwtGenerator(user.rows[0].user_id);
       return res.json({ jwtToken });
     } catch (err) {

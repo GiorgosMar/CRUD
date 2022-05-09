@@ -30,8 +30,7 @@ const Login = ({ setAuth }) => {
       e.preventDefault();
       try {
         const body = { email, password };
-        const response = await fetch(
-          "/authentication/login",
+        const response = await fetch(`/authentication/login`,
           {
             method: "POST",
             headers: {
@@ -90,8 +89,13 @@ const Login = ({ setAuth }) => {
               label="Email Address"
               name="email"
               autoComplete="email"
-              value={email}
-              onChange={e => onChangeEmail(e)}
+              value={inputs.email}
+              onChange={(e) =>
+                setInputs({
+                  ...inputs,
+                  email: e.target.value,
+                })
+              }
               autoFocus
             />
             <TextField
@@ -102,8 +106,13 @@ const Login = ({ setAuth }) => {
               label="Password"
               type="password"
               id="password"
-              value={password}
-              onChange={e => onChangePassword(e)}
+              value={inputs.password}
+              onChange={(e) =>
+                setInputs({
+                  ...inputs,
+                  password: e.target.value,
+                })
+              }
               autoComplete="current-password"
             />
             <Button
@@ -111,7 +120,7 @@ const Login = ({ setAuth }) => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            >Sign In
+            >Σύνδεση
             </Button>
             <Grid>
               { errorMessage && <Alert severity="error">{errorMessage}</Alert>} 
