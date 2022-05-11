@@ -20,12 +20,6 @@ const Login = ({ setAuth }) => {
 
   const { email, password } = inputs;
 
-  const onChangeEmail = e =>
-    setInputs({ ...inputs, email: e.target.value });
-    
-  const onChangePassword = e =>
-    setInputs({ ...inputs, password: e.target.value });
-
     const onSubmitForm = async e => {
       e.preventDefault();
       try {
