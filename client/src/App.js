@@ -17,28 +17,30 @@ import Login from "./components/Login";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const checkAuthenticated = async () => {
-        try {
-          const res = await fetch("/authentication/verify", {
-            method: "POST",
-            headers: { jwt_token: localStorage.token }
-          });
-    
-          const parseRes = await res.json();
-    
-          parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
-        } catch (err) {
-          console.error(err.message);
-        }
-      };
-    
-      useEffect(() => {
-        checkAuthenticated();
-      }, []);
-    
-      const setAuth = boolean => {
-        setIsAuthenticated(boolean);
-      };
+  
+  const setAuth = boolean => {
+    setIsAuthenticated(boolean);
+  };
+
+  const checkAuthenticated = async () => {
+    try {
+      const res = await fetch(`/authentication/verify`,{
+        method: "POST",
+        headers: { jwt_Token: localStorage.Token },
+      });
+
+      const parseRes = await res.json();
+
+      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    checkAuthenticated();
+  }, []);
+  
 
   return (
   <LocalizationProvider dateAdapter={AdapterDateFns}>
