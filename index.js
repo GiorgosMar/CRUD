@@ -48,10 +48,10 @@ app.get("/employee", async (req, res) =>{
           );
     
           const employeesElements = {
-            totalEmployees: countEmpl.rows[0].count,
+            totalEmployees: countEmpl.rows[0].count / 1,
             employees: allEmployees.rows,
             countPages: countEmpl.rows[0].count / limit,
-            pageNumber: page,
+            pageNumber: page / 1,
           };
           res.json(employeesElements);
         }else{
