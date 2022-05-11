@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
 const pool = require("./db");
 const validInfo = require("./validInfo");
 const jwtGenerator = require("./jwtGenerator");
@@ -16,12 +15,6 @@ router.post("/login", validInfo, async (req, res) => {
       if (user.rows.length === 0) {
         return res.status(401).json("Λάθος στοιχεία!");
       }
-
-      /*const validPassword = await bcrypt.compare(password, user.rows[0].password);
-
-      if (!validPassword) {
-        return res.status(401).json("Λάθος email ή κωδικός!");
-      }*/
 
       if (password !== user.rows[0].user_password){
         return res.status(401).json("Λάθος στοιχεία!");

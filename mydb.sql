@@ -18,4 +18,4 @@ CREATE TABLE users(
     user_password VARCHAR(200)
 );
 
-INSERT INTO users(user_email, user_password) VALUES('user@mail.com', '$2a$10$iOzRv4805tdFMmeMcsmrbO.1gIcYe8Z6VvyR5VVQJmNO55helPE2G');
+INSERT INTO users(user_email, user_password) VALUES('user@mail.com', 'user');
