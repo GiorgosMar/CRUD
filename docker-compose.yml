@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  react-client:
+    build: ./client
+    container_name: client
+    ports:
+      - '3000:3000'
+    networks:
+      crud:
+    stdin_open: true
+    tty: true
+    
+  server:
+    build: ./
+    container_name: server
+    ports:
+      - '5000:5000'
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    networks:
+       crud:
+
+  postgres:
+    image: postgres
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    ports:
+      - '5432:5432'
+    networks:
+      crud:
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data\
+
+networks:
+  crud:
+volumes:
+  pgdata:
+    driver: local
