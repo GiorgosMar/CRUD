@@ -88,11 +88,18 @@ function List({setAuth}) {
     //Delete//
     const deleteEmployee = async (id) => {
         try{
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("token", localStorage.Token);
             const deleteEmpl = await fetch(`/employee/${id}`, {
                 method: "DELETE"
             }); 
+            await fetch(`/employee/${id}`, {
+                headers: myHeaders,
+                method: "DELETE",
+              });
+        
             getEmployees();
-            navigate('/');
         } catch(err){
             console.error(err.message)
         }
@@ -101,7 +108,13 @@ function List({setAuth}) {
     //get employees//
     const getEmployees = async () => {
         try {
-            const response = await fetch(`/employee?page=${currentPage}`);
+            //pass 2 headers
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("token", localStorage.Token);
+            const response = await fetch(`/employee?page=${currentPage}`, {
+                headers: myHeaders,
+              });
             const getEmpl = await response.json();
 
             setEmployees(getEmpl.employees);
@@ -127,7 +140,7 @@ function List({setAuth}) {
     const logout = async e => {
         e.preventDefault();
         try {
-          localStorage.removeItem("token");
+          localStorage.removeItem("Token");
           setAuth(false);
         } catch (err) {
           console.error(err.message);

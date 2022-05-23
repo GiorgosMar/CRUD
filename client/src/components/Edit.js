@@ -35,7 +35,14 @@ const Edit = () =>{
   const onSubmitFormUpadate = async e => { 
     e.preventDefault();
     try{
-      const response = await fetch(`/employee/?afm=${userUpdate.afm}`);
+       //pass 2 headers
+       const myHeaders = new Headers();
+       myHeaders.append("Content-Type", "application/json");
+       myHeaders.append("token", localStorage.Token);
+
+      const response = await fetch(`/employee/?afm=${userUpdate.afm}`, {
+        headers: myHeaders,
+      });
       const returnEmployee = await response.json();
 
       if (userUpdate.afm.length === 0) {
@@ -45,7 +52,7 @@ const Edit = () =>{
       }else if (returnEmployee.afm !== userUpdate.afm || returnEmployee.id == params.id) {
         await fetch(`/employee/${params.id}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: myHeaders,
           body: JSON.stringify(userUpdate),
         });
         navigate("/");

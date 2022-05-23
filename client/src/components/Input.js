@@ -31,7 +31,13 @@ const Input = () =>{
   const onSubmitForm = async e => {
     e.preventDefault();
     try{
-      const response = await fetch(`/employee?afm=${userInsert.afm}`);
+      //pass 2 headers
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("token", localStorage.Token);
+      const response = await fetch(`/employee?afm=${userInsert.afm}`, {
+        headers: myHeaders,
+      });
       const returnAfm = await response.json();
 
       if (userInsert.afm === null) {
@@ -42,7 +48,7 @@ const Input = () =>{
         const body = userInsert;
         await fetch("/employee", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: myHeaders,
           body: JSON.stringify(body),
         });
         navigate("/");

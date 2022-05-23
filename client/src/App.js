@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { Container } from "@material-ui/core";
 import React,{ Fragment, useState, useEffect } from "react";
-import {BrowserRouter as Router, Routes, Route, Navigate, Outlet} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import './App.css';
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
