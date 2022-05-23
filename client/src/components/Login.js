@@ -16,7 +16,7 @@ const Login = ({ setAuth }) => {
     password: ""
   });
 
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const { email, password } = inputs;
 
@@ -38,11 +38,11 @@ const Login = ({ setAuth }) => {
         console.log(parseRes);
 
        if(parseRes === "Λάθος στοιχεία!"){
-         setErrorMessage("Λάθος στοιχεία!")
-       }else if(parseRes === "Συμπληρώστε τα πεδία"){
-        setErrorMessage("Συμπληρώστε τα πεδία!")
-      }else if(parseRes === "Λάθος Email"){
-        setErrorMessage("Λάθος Email!")
+         setErrorMessage("Λάθος στοιχεία!");
+       }else if(parseRes === "Συμπληρώστε τα πεδία!"){
+        setErrorMessage("Συμπληρώστε τα πεδία!");
+      }else if(parseRes === "Λάθος Email!"){
+        setErrorMessage("Λάθος Email!");
       }else if (parseRes.jwtToken) {
         localStorage.setItem("Token", parseRes.jwtToken);
         setAuth(true);
@@ -117,7 +117,7 @@ const Login = ({ setAuth }) => {
             >Σύνδεση
             </Button>
             <Grid>
-              { errorMessage && <Alert severity="error">{errorMessage}</Alert>} 
+              { errorMessage && <Alert severity="error"> {errorMessage} </Alert>} 
             </Grid>
           </Box>
         </Box>
