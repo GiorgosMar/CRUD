@@ -1,8 +1,7 @@
 version: "3.8"
 services:
-  react-app:
-    build:
-      context: ./client
+  react:
+    image: giorgosmarinoss/crud_react
     container_name: client
     ports:
       - "3000:3000"
@@ -11,9 +10,8 @@ services:
     stdin_open: true
     tty: true
 
-  api-server:
-    build:
-      context: ./
+  server:
+    image: giorgosmarinoss/crud_server
     container_name: server
     ports:
       - "5000:5000"
@@ -21,17 +19,18 @@ services:
       pern-app:
 
   postgres:
-    image: postgres
+    image: giorgosmarinoss/crud_postgres
     container_name: postgres_db
     environment:
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
-      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_DATABASE: mydb
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5438:5432"
     networks:
       pern-app:
-    volumes:
+    volumes: 
       - ./pgdata:/var/lib/postgresql/data
 
 networks:
