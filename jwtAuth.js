@@ -30,7 +30,7 @@ router.post("/login", validInfo, async (req, res) => {
   
   router.post("/verify", authorize, (req, res) => {
     try {
-      res.json(true);
+      res.status(200).send('Empty Body');
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
